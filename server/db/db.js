@@ -8,6 +8,6 @@ const db = new Sequelize(`postgres://localhost:5432/${databaseName}`, {
 });
 module.exports = db;
 
-if (process.env.NODE_ENV === "test") {
+if (process.env.NODE_ENV) {
   after("close database connection", () => db.close());
 }

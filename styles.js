@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     backgroundColor: "gray"
+  },
+  header: {
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    backgroundColor: "gray",
+    color: "whitesmoke"
   }
 });
 

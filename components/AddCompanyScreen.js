@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput, Button } from "react-native-paper";
+import { connect } from "react-redux";
+
 import styles from "../styles";
 
 class CompanyProfileScreen extends Component {

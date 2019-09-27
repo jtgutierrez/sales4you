@@ -1,11 +1,12 @@
 const db = require("./server/db/db");
 const { Company } = require("./server/db/models");
 const fs = require("fs");
-const [data] = require("./No_ID_MOCK_DATA");
+const data = require("./No_ID_MOCK_DATA");
 
 async function seed() {
   await db.sync();
   console.log("db synced!");
+  console.log(Array.isArray(data));
   await Company.bulkCreate(data);
   console.log(`seeded successfully`);
 }
