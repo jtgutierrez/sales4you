@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
-import { TextInput, Paragraph } from "react-native-paper";
+import { StyleSheet, Text, View } from "react-native";
+import { TextInput, Button } from "react-native-paper";
 import styles from "../styles";
 
 class CompanyProfileScreen extends Component {
@@ -13,7 +13,8 @@ class CompanyProfileScreen extends Component {
         <TextInput placeholder="Email"></TextInput>
         <TextInput placeholder="Name"></TextInput>
         <TextInput placeholder="Address"></TextInput>
-        <Paragraph placeholder="Address"></Paragraph>
+        <TextInput placeholder="Discount"></TextInput>
+        <Button title="TEXT">SUBMIT</Button>
       </View>
     );
   }

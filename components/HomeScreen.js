@@ -13,7 +13,7 @@ class HomeScreen extends Component {
     };
   }
   static navigationOptions = {
-    title: "SALES"
+    title: "SALES4YOU"
   };
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
@@ -46,7 +46,7 @@ class HomeScreen extends Component {
         </MapView>
         <View style={styles.footer}>
           <Button
-            title="Company"
+            title="Add Your Company"
             color="white"
             onPress={() => {
               navigate("AddCompany");
