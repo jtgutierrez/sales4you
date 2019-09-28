@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Text, View, Button, Provider } from "react-native";
+import { Text, View, Button, Provider, Image } from "react-native";
 import MapView, { Marker, MapContainer } from "react-native-maps";
 import { connect } from "react-redux";
 import { getClosestCompanies } from "./store/companies";
 import { getDistanceThunkCreator } from "./store/distance";
 import styles from "../styles";
-const DATA = require("../DATA");
 
 class DisconnectedHomeScreen extends Component {
   constructor(props) {
@@ -13,8 +12,7 @@ class DisconnectedHomeScreen extends Component {
     this.state = {
       latitude: 0,
       longitude: 0,
-      error: null,
-      distance: null
+      error: null
     };
 
     this.handlePress = this.handlePress.bind(this);
@@ -22,9 +20,13 @@ class DisconnectedHomeScreen extends Component {
   static navigationOptions = {
     title: "SALES4YOU"
   };
-  async componentDidMount() {
+  componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      });
+      this.props.getClosest({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       });
@@ -47,47 +49,64 @@ class DisconnectedHomeScreen extends Component {
 
   render() {
     const { navigate, setParams } = this.props.navigation;
-    return (
-      <View style={styles.mainBackground}>
-        <Text style={styles.header}>Distance</Text>
-        <MapView
-          style={{ flex: 1 }}
-          provider="google"
-          region={{
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
-            latitudeDelta: 0.04,
-            longitudeDelta: 0.04
+    if (this.props.companies.loading) {
+      return (
+        <Image
+          style={styles.loading}
+          source={{
+            uri:
+              "https://1.bp.blogspot.com/-tM8Z7VPNn5Q/WMkr9sb6qyI/AAAAAAAAA9s/IjGPg8VFOkc41UWeaWuGY7eyJeCCEb82gCLcB/s1600/earth%2B.gif"
           }}
-          showsUserLocation={true}
-          followsUserLocation={true}
-        >
-          {DATA.map((location, idx) => {
-            const latitude = location["Lattitude"];
-            const longitude = location["Longitude"];
-            const name = location["Company"];
-            return (
-              <Marker
-                key={idx}
-                title={name}
-                coordinate={{ latitude, longitude }}
-                onPress={this.handlePress}
-              />
-            );
-          })}
-        </MapView>
-
-        <View style={styles.footer}>
-          <Button
-            title="Add Your Company"
-            color="white"
-            onPress={() => {
-              navigate("AddCompany");
+        />
+      );
+    } else {
+      const data = this.props.companies;
+      return (
+        <View style={styles.mainBackground}>
+          <Text style={styles.header}>
+            Distance: {this.props.distance.miles} Walk:{" "}
+            {this.props.distance.time}
+          </Text>
+          <MapView
+            style={{ flex: 1 }}
+            provider="google"
+            initialRegion={{
+              latitude: this.state.latitude,
+              longitude: this.state.longitude,
+              latitudeDelta: 0.04,
+              longitudeDelta: 0.04
             }}
-          />
+            showsUserLocation={true}
+            followsUserLocation={true}
+          >
+            {data.companies.map((location, idx) => {
+              const latitude = location.latitude;
+              const longitude = location.longitude;
+              const name = location.name;
+              return (
+                <Marker
+                  key={idx}
+                  title={name}
+                  description={`50% OFF EVERYTHING`}
+                  coordinate={{ latitude, longitude }}
+                  onPress={evt => this.handlePress(evt)}
+                />
+              );
+            })}
+          </MapView>
+
+          <View style={styles.footer}>
+            <Button
+              title="Add Your Company"
+              color="white"
+              onPress={() => {
+                navigate("AddCompany");
+              }}
+            />
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
   }
 }
 const mapState = state => {
@@ -98,7 +117,7 @@ const mapState = state => {
 };
 
 const mapDispatch = dispatch => ({
-  getClosest: () => dispatch(getClosestCompanies()),
+  getClosest: myLocation => dispatch(getClosestCompanies(myLocation)),
   getDistance: (marker, myLocation) =>
     dispatch(getDistanceThunkCreator(marker, myLocation))
 });

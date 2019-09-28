@@ -21,6 +21,13 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     backgroundColor: "gray",
     color: "whitesmoke"
+  },
+  loading: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    bottom: 150,
+    left: 10
   }
 });
 

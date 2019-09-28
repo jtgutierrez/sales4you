@@ -6,7 +6,10 @@ var destination;
 
 const GET_DISTANCE = "GET_DISTANCE";
 
-const initialState = {};
+const initialState = {
+  miles: "",
+  time: ""
+};
 
 const gotDistance = distance => ({
   type: GET_DISTANCE,
@@ -26,7 +29,10 @@ export const getDistanceThunkCreator = (marker, myLoc) => {
       const { data } = await axios.get(
         `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&mode=walking&origins=${origin}&destinations=${destination}&key=${KEY}`
       );
-      console.log(data);
+
+      const miles = data.rows[0].elements[0].distance.text;
+      const time = data.rows[0].elements[0].duration.text;
+      dispatch(gotDistance({ miles, time }));
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +42,11 @@ export const getDistanceThunkCreator = (marker, myLoc) => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_DISTANCE:
-      return action.distance;
+      return {
+        ...state,
+        miles: action.distance.miles,
+        time: action.distance.time
+      };
     default:
       return state;
   }
