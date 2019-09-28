@@ -5,6 +5,18 @@ import { connect } from "react-redux";
 import { getClosestCompanies } from "./store/companies";
 import { getDistanceThunkCreator } from "./store/distance";
 import styles from "../styles";
+import Header from "./header";
+const items = [
+  "shoes",
+  "button-down shirts",
+  "dresses",
+  "designer bags",
+  "sweaters",
+  "hoodies",
+  "shorts",
+  "suits",
+  "underwear"
+];
 
 class DisconnectedHomeScreen extends Component {
   constructor(props) {
@@ -18,7 +30,7 @@ class DisconnectedHomeScreen extends Component {
     this.handlePress = this.handlePress.bind(this);
   }
   static navigationOptions = {
-    title: "SALES4YOU"
+    headerTitle: <Header />
   };
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
@@ -87,7 +99,11 @@ class DisconnectedHomeScreen extends Component {
                 <Marker
                   key={idx}
                   title={name}
-                  description={`50% OFF EVERYTHING`}
+                  description={`${Math.floor(
+                    Math.random() * Math.floor(30)
+                  )}% OFF ${items[
+                    Math.floor(Math.random() * items.length)
+                  ].toUpperCase()}`}
                   coordinate={{ latitude, longitude }}
                   onPress={evt => this.handlePress(evt)}
                 />

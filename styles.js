@@ -28,6 +28,9 @@ const styles = StyleSheet.create({
     right: 10,
     bottom: 150,
     left: 10
+  },
+  title: {
+    padding: 0
   }
 });
 
