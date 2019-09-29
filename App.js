@@ -5,10 +5,12 @@ import HomeScreen from "./components/HomeScreen";
 import AddCompanyScreen from "./components/AddCompanyScreen";
 import { Provider } from "react-redux";
 import store from "./components/store";
+import DiscountScreen from "./components/DiscountScreen";
 
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
-  AddCompany: { screen: AddCompanyScreen }
+  AddCompany: { screen: AddCompanyScreen },
+  Discounts: { screen: DiscountScreen }
 });
 
 const App = createAppContainer(MainNavigator);

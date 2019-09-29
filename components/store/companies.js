@@ -23,7 +23,13 @@ export const getClosestCompanies = location => {
       for (let i = 0; i < data.results.length; i++) {
         let place = data.results[i];
         let { lat, lng } = place.geometry.location;
-        nearby.push({ latitude: lat, longitude: lng, name: place.name });
+
+        nearby.push({
+          latitude: lat,
+          longitude: lng,
+          name: place.name,
+          address: place.vicinity
+        });
       }
       dispatch(gotClosestCompanies(nearby));
     } catch (error) {

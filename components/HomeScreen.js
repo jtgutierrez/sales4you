@@ -5,18 +5,7 @@ import { connect } from "react-redux";
 import { getClosestCompanies } from "./store/companies";
 import { getDistanceThunkCreator } from "./store/distance";
 import styles from "../styles";
-import Header from "./Header";
-const items = [
-  "shoes",
-  "button-down shirts",
-  "dresses",
-  "designer bags",
-  "sweaters",
-  "hoodies",
-  "shorts",
-  "suits",
-  "underwear"
-];
+import Title from "./Title";
 
 class DisconnectedHomeScreen extends Component {
   constructor(props) {
@@ -26,11 +15,12 @@ class DisconnectedHomeScreen extends Component {
       longitude: 0,
       error: null
     };
+    this.store = {};
 
     this.handlePress = this.handlePress.bind(this);
   }
   static navigationOptions = {
-    headerTitle: <Header />
+    headerTitle: <Title />
   };
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
@@ -46,6 +36,14 @@ class DisconnectedHomeScreen extends Component {
   }
   handlePress(evt) {
     const { latitude, longitude } = evt.nativeEvent.coordinate;
+
+    for (let i = 0; i < this.props.companies.companies.length; i++) {
+      let company = this.props.companies.companies[i];
+      if (company.latitude === latitude && company.longitude === longitude) {
+        this.store = company;
+      }
+    }
+    console.log("STTOOOOOOOREEEEE---------", this.store);
     this.props.getDistance(
       { latitude, longitude },
       {
@@ -60,7 +58,6 @@ class DisconnectedHomeScreen extends Component {
     const { latitude, longitude } = evt.nativeEvent.coordinate;
     this.location.latitude = latitude;
     this.location.longitude = longitude;
-    console.log(this.location);
   }
 
   render() {
@@ -104,16 +101,12 @@ class DisconnectedHomeScreen extends Component {
               const latitude = location.latitude;
               const longitude = location.longitude;
               const name = location.name;
-              const discount = `${Math.floor(
-                Math.random() * Math.floor(30)
-              )}% OFF ${items[
-                Math.floor(Math.random() * items.length)
-              ].toUpperCase()}`;
+              const address = location.address;
               return (
                 <Marker
                   key={idx}
                   title={name}
-                  description={discount}
+                  description={address}
                   coordinate={{ latitude, longitude }}
                   onPress={evt => this.handlePress(evt)}
                 />
@@ -121,12 +114,19 @@ class DisconnectedHomeScreen extends Component {
             })}
           </MapView>
 
-          <View style={styles.footer}>
+          <View style={styles.header}>
             <Button
-              title="Add Your Company"
+              title="Add Your Deals"
               color="white"
               onPress={() => {
                 navigate("AddCompany");
+              }}
+            />
+            <Button
+              title="Discounts"
+              color="white"
+              onPress={() => {
+                navigate("Discounts", this.store);
               }}
             />
           </View>

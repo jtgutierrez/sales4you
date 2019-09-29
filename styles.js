@@ -31,6 +31,42 @@ const styles = StyleSheet.create({
   },
   title: {
     padding: 0
+  },
+  overlay: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundColor: "green",
+    opacity: 0.3,
+    borderRadius: 20
+  },
+  padding: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#90EE90"
+  },
+  discountScreen: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "whitesmoke",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  subtitleView: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingLeft: 10,
+    paddingTop: 5
+  },
+  longStyle: {
+    marginRight: 20,
+    flex: 1,
+    flexWrap: "wrap",
+    flexBasis: 175
   }
 });
 
