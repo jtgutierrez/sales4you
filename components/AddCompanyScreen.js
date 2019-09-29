@@ -15,10 +15,8 @@ class CompanyProfileScreen extends Component {
         <TextInput placeholder="Email"></TextInput>
         <TextInput placeholder="Name"></TextInput>
         <TextInput placeholder="Address"></TextInput>
-
         <TextInput placeholder="Item"></TextInput>
         <TextInput placeholder="Dicount"></TextInput>
-
         <Button title="TEXT">SUBMIT</Button>
       </View>
     );
