@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
     backgroundColor: "gray"
   },
   header: {
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    backgroundColor: "gray",
-    color: "whitesmoke"
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "gray"
   },
   loading: {
     position: "absolute",

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { getClosestCompanies } from "./store/companies";
 import { getDistanceThunkCreator } from "./store/distance";
 import styles from "../styles";
-import Header from "./header";
+import Header from "./Header";
 const items = [
   "shoes",
   "button-down shirts",
@@ -21,7 +21,7 @@ const items = [
 class DisconnectedHomeScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.location = {
       latitude: 0,
       longitude: 0,
       error: null
@@ -34,10 +34,8 @@ class DisconnectedHomeScreen extends Component {
   };
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
-      this.setState({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      });
+      this.location.latitude = position.coords.latitude;
+      this.location.longitude = position.coords.longitude;
       this.props.getClosest({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
@@ -52,11 +50,17 @@ class DisconnectedHomeScreen extends Component {
       { latitude, longitude },
       {
         myLocation: {
-          latitude: this.state.latitude,
-          longitude: this.state.longitude
+          latitude: this.location.latitude,
+          longitude: this.location.longitude
         }
       }
     );
+  }
+  updateLocation(evt) {
+    const { latitude, longitude } = evt.nativeEvent.coordinate;
+    this.location.latitude = latitude;
+    this.location.longitude = longitude;
+    console.log(this.location);
   }
 
   render() {
@@ -75,35 +79,41 @@ class DisconnectedHomeScreen extends Component {
       const data = this.props.companies;
       return (
         <View style={styles.mainBackground}>
-          <Text style={styles.header}>
-            Distance: {this.props.distance.miles} Walk:{" "}
-            {this.props.distance.time}
-          </Text>
+          <View style={styles.header}>
+            <Text style={{ color: "whitesmoke" }}>
+              Distance: {this.props.distance.miles}
+            </Text>
+            <Text style={{ color: "whitesmoke" }}>
+              Walk: {this.props.distance.time}
+            </Text>
+          </View>
           <MapView
             style={{ flex: 1 }}
             provider="google"
             initialRegion={{
-              latitude: this.state.latitude,
-              longitude: this.state.longitude,
+              latitude: this.location.latitude,
+              longitude: this.location.longitude,
               latitudeDelta: 0.04,
               longitudeDelta: 0.04
             }}
             showsUserLocation={true}
             followsUserLocation={true}
+            onUserLocationChange={evt => this.updateLocation(evt)}
           >
             {data.companies.map((location, idx) => {
               const latitude = location.latitude;
               const longitude = location.longitude;
               const name = location.name;
+              const discount = `${Math.floor(
+                Math.random() * Math.floor(30)
+              )}% OFF ${items[
+                Math.floor(Math.random() * items.length)
+              ].toUpperCase()}`;
               return (
                 <Marker
                   key={idx}
                   title={name}
-                  description={`${Math.floor(
-                    Math.random() * Math.floor(30)
-                  )}% OFF ${items[
-                    Math.floor(Math.random() * items.length)
-                  ].toUpperCase()}`}
+                  description={discount}
                   coordinate={{ latitude, longitude }}
                   onPress={evt => this.handlePress(evt)}
                 />
