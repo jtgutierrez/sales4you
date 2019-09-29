@@ -67,6 +67,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexWrap: "wrap",
     flexBasis: 175
+  },
+  addCompanyScreen: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "whitesmoke",
+    padding: 50
   }
 });
 

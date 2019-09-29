@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button, DataTable } from "react-native-paper";
 import { connect } from "react-redux";
 
 import styles from "../styles";
@@ -11,11 +11,14 @@ class CompanyProfileScreen extends Component {
   };
   render() {
     return (
-      <View style={styles.mainBackground}>
+      <View style={styles.addCompanyScreen}>
         <TextInput placeholder="Email"></TextInput>
         <TextInput placeholder="Name"></TextInput>
         <TextInput placeholder="Address"></TextInput>
-        <TextInput placeholder="Discount"></TextInput>
+
+        <TextInput placeholder="Item"></TextInput>
+        <TextInput placeholder="Dicount"></TextInput>
+
         <Button title="TEXT">SUBMIT</Button>
       </View>
     );

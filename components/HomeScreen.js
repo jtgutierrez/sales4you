@@ -43,7 +43,7 @@ class DisconnectedHomeScreen extends Component {
         this.store = company;
       }
     }
-    console.log("STTOOOOOOOREEEEE---------", this.store);
+
     this.props.getDistance(
       { latitude, longitude },
       {
@@ -123,7 +123,7 @@ class DisconnectedHomeScreen extends Component {
               }}
             />
             <Button
-              title="Discounts"
+              title="DISCOUNTS"
               color="white"
               onPress={() => {
                 navigate("Discounts", this.store);

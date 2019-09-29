@@ -31,12 +31,12 @@ class DiscountScreen extends Component {
       return (
         <View style={styles.discountScreen}>
           <Text h3>{name}</Text>
-          <Text h4>{address}</Text>
+          <Text>{address}</Text>
           <View style={styles.subtitleView}>
             {items.map((item, i) => (
               <ListItem
                 style={styles.longStyle}
-                title={item}
+                title={`50% OFF ${item}`}
                 key={i}
                 leftAvatar={{
                   source: {
