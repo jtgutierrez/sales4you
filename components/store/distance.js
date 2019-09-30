@@ -1,5 +1,4 @@
 import axios from "axios";
-const KEY = "AIzaSyD1SSLqibsgl1qSVWfR-_nUBVJtgcENSuM";
 
 var origin;
 var destination;
