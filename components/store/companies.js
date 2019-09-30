@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const GET_CLOSEST = "GET_CLOSEST";
 
 const initialState = { loading: true };

@@ -1,5 +1,4 @@
 import axios from "axios";
-
 var origin;
 var destination;
 
